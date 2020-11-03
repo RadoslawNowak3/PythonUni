@@ -13,7 +13,7 @@ if x > y:
 else:
     result = y
 ############
-  for i in "qwerty": if ord(i) < 100: print (i)
+for i in "qwerty": if ord(i) < 100: print (i)
 # Bledem w tym kodzie jest nie zastosowanie wciec przez co program nie moze sie skompilowac
 # poprawiony kod:
 for i in "qwerty":
@@ -22,3 +22,5 @@ for i in "qwerty":
 ############
 for i in "axby": print (ord(i) if ord(i) < 100 else i)
 # Ten kod dziala w porzadku, mozna przeniesc print do wciecia w kolejnej linijce dla lepszej przejrzystosci
+for i in "axby":
+    print (ord(i) if ord(i) < 100 else i)
