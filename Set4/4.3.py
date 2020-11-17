@@ -1,0 +1,11 @@
+def factorial(n):
+    result=1
+    if n==0 or n==1:
+        return result
+    else:
+        for i in range(2,n+1):
+            result*=i
+    return result
+
+factor = int(input("Input factor: "))
+print(factorial(factor))
