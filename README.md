@@ -1,3 +1,3 @@
-3 Zestaw Python
+University Python Lab
 
 
