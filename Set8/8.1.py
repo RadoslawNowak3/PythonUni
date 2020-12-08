@@ -20,13 +20,10 @@ def solve1(a, b, c):
       if c == 0:
         print("x = ",-b/a, "* y")
       else:
-          if(c>0):
-            print("x = ", -b/a, "* y", -c / b)
+          if(-c/b>0):
+            print("x = ", -b/a, "* y", -c / a)
           else:
-              print("x = ", -b / a, "* y +", -c / b)
+              print("x = ", -b / a, "* y +", -c / a)
 
-x = float(input("Enter x"))
-y = float(input("Enter y"))
-z = float(input("Enter z"))
-print("Solution for equation 5x + 10y + 50 = 0: ")
-solve1(x, y, z)
+print("Solution for  10x - 5y + 25 = 0: ")
+solve1(10, -5, 25)
