@@ -61,7 +61,7 @@ class DoubleList:
 
     def remove_head(self):   # zwraca node
         if self.is_empty():
-            raise ValueError("pusta lista")
+            raise ValueError("Empty list")
         elif self.head is self.tail:   # length == 1
             node = self.head
             self.head = None
@@ -78,7 +78,7 @@ class DoubleList:
 
     def remove_tail(self):   # zwraca node
         if self.is_empty():
-            raise ValueError("pusta lista")
+            raise ValueError("Empty list")
         elif self.head is self.tail:   # length == 1
             node = self.tail
             self.head = None
@@ -116,7 +116,7 @@ class DoubleList:
 
     def remove(self, node):
         if self.is_empty():
-            raise ValueError("pusta lista")
+            raise ValueError("Empty list")
         elif node == self.head:
             self.remove_head()
         elif node == self.tail:
@@ -135,7 +135,7 @@ class DoubleList:
 
     def clear(self):
         if self.is_empty():
-            raise ValueError("pusta lista")
+            raise ValueError("Empty list")
         current = self.tail
         self.tail = None
         while current.prev is not None:

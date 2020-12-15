@@ -59,7 +59,7 @@ class Node:
 
 def bst_min(root):
   if(root is None):
-      raise ValueError("puste drzewo")
+      raise ValueError("Empty tree")
   if root.left is not None:
     return bst_min(root.left)
   else:
@@ -67,7 +67,7 @@ def bst_min(root):
 
 def bst_max(root):
   if (root is None):
-    raise ValueError("puste drzewo")
+    raise ValueError("Empty tree")
   if root.right is not None:
     return bst_max(root.right)
   else:

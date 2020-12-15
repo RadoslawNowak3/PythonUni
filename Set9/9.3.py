@@ -1,10 +1,8 @@
 from DoubleList import *
 
 DL_test = DoubleList()
-
 for index in range(12):
   DL_test.insert_tail(Node(index))
-
 print("My list:", DL_test)
 node1 = DL_test.find_min()
 node2 = DL_test.find_max()
