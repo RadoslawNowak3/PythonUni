@@ -1,8 +1,5 @@
 from Graph import *
-
-graph = Graph()
-for i in range(5):
-    graph.add_vertex()
+graph = Graph(5)
 graph.add_edge(1,2,3)
 graph.add_edge(1,4,4)
 graph.add_edge(3,1,3)
