@@ -1,5 +1,5 @@
 from math import *
-
+import unittest
 class Graph:
 
     def __init__(self, size):
@@ -9,6 +9,12 @@ class Graph:
         self.distance = []
         self.source = None
         self.travel = []
+
+    def __eq__(self, other):
+        if self.arr == other.arr and self.edges == other.edges and self.size == other.size:
+            return True
+        return False
+
 
     def has_vertex(self, index):
        if index >= self.size:
@@ -49,12 +55,10 @@ class Graph:
         if self.has_edge(v1,v2):
             return self.arr[v1][v2]
         else:
-            print("Edge doesn't exist!")
             return -1
 
     def add_edge(self,v1,v2,value):
         if (value<=0):
-            print("Edge value can not be negative!")
             return -1
         if self.has_edge(v1, v2) is not False:
             print ("Edge already exists or indexes are outside of range! ",v1,"-",v2)
@@ -65,7 +69,6 @@ class Graph:
 
     def remove_edge(self,v1,v2):
         if (self.edges == 0):
-            print("No edges to remove")
             return -1
         if self.has_edge (v1, v2) is not True:
             print("Edge doesn't exist or indexes outside of range! ",v1,"-",v2)
@@ -76,13 +79,12 @@ class Graph:
 
     def remove_vertex(self, index):
         if self.has_vertex(index) is not True:
-            print("Vertex ", index, "doesn't exist")
             return -1
         for i in range(self.size):
             if(self.arr[i][index]!=0):
                 self.edges-=1
                 self.arr[i][index]=0
-                if (self.arr[index][i] != 0):
+                if (self.arr[index][i]!= 0):
                     self.arr[index][i]=0
 
     def print_graph(self):
@@ -151,3 +153,79 @@ class Graph:
                     print(self.source)
                 else:
                     print("Could not get to vertex ", i)
+
+
+class Test(unittest.TestCase):
+    def setUp(self):
+         self.graph = Graph(5)
+         self.graph.add_edge(1,2,3)
+         self.graph.add_edge(1,4,4)
+         self.graph.add_edge(3,1,3)
+         self.graph.add_edge(3,0,3)
+         self.graph.add_edge(3,4,4)
+         self.graph.add_edge(2,0,1)
+         self.graph.add_edge(4,2,3)
+         self.graph.add_edge(0,1,6)
+
+    def test_copy(self):
+         copy = self.graph.copy_graph()
+         self.assertEqual(self.graph,copy)
+
+    def test_has_vertex(self):
+         for i in range(self.graph.size):
+             self.assertEqual(self.graph.has_vertex(i), True)
+
+    def test_is_in_range(self):
+        for i in range (-10,-1):
+            self.assertTrue(self.graph.is_in_range(i,i+1) is False)
+        for i in range(0,3):
+            self.assertTrue(self.graph.is_in_range(i,i+1) is True)
+        for i in range(4,10):
+            self.assertTrue(self.graph.is_in_range(i,i+1) is False)
+    def test_has_edge(self):
+        self.assertTrue(self.graph.has_edge(1, 2), True)
+        self.assertTrue(self.graph.has_edge(1, 4), True)
+        self.assertTrue(self.graph.has_edge(1, 3), True)
+        self.assertTrue(self.graph.has_edge(3, 0), True)
+        self.assertTrue(self.graph.has_edge(4, 3), True)
+        self.assertTrue(self.graph.has_edge(0, 2), True)
+        self.assertTrue(self.graph.has_edge(4, 2), True)
+        self.assertTrue(self.graph.has_edge(1, 0), True)
+        self.assertFalse(self.graph.has_edge(5, 0), True)
+        self.assertFalse(self.graph.has_edge(-1, 0), True)
+        self.assertFalse(self.graph.has_edge(6, 0), True)
+        self.assertFalse(self.graph.has_edge(2, 3), True)
+
+    def test_weight_edge(self):
+        self.assertTrue(self.graph.weight_edge(1, 2) == 3)
+        self.assertFalse(self.graph.weight_edge(1, 2) == 4)
+        self.assertTrue(self.graph.weight_edge(6, 5) == -1)
+
+    def test_remove_edge(self):
+        copy = self.graph.copy_graph()
+        self.assertTrue(copy.arr[0][1] == self.graph.arr[0][1] == 6 == copy.arr[1][0] == self.graph.arr[1][0])
+        self.assertTrue(copy.edges==self.graph.edges==8)
+        self.graph.remove_edge(0,1)
+        self.assertFalse(copy.arr[0][1] == self.graph.arr[0][1] == copy.arr[1][0] == self.graph.arr[1][0])
+        self.assertFalse(copy.edges == self.graph.edges)
+        copy.arr[0][1] = 0
+        copy.arr[1][0] = 0
+        copy.edges-=1
+        self.assertTrue(copy.arr[0][1] == self.graph.arr[0][1] == 0 == copy.arr[1][0] == self.graph.arr[1][0])
+        self.assertTrue(copy.edges == self.graph.edges == 7)
+        empty = Graph(0)
+        self.assertTrue(empty.remove_edge(0,2), -1)
+    def test_add_edge(self):
+        copy = self.graph.copy_graph()
+        self.assertTrue(self.graph==copy)
+        self.graph.add_edge(0, 4, 10)
+        self.assertFalse(self.graph==copy)
+        copy.arr[0][4] = 10
+        copy.arr[4][0] = 10
+        copy.edges += 1
+        self.assertTrue(self.graph == copy)
+
+    def tearDown(self): pass
+
+if __name__ == '__main__':
+  unittest.main()
