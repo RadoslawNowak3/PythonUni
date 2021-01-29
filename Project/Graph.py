@@ -17,7 +17,7 @@ class Graph:
 
     def add_vertex(self):
         if self.is_full()==True:
-            raise OverflowError("Matrix is full!")   # Alternative: print("Matrix is full!") else:
+            raise IndexError("Matrix is full!")   # Alternative: print("Matrix is full!") else:
         self.vertices+=1                             # If matrix size is supposed to be dynamic instead of static
                                                      # Add a column by looping through all rows and add a row
     def has_vertex(self, index):
