@@ -41,7 +41,7 @@ class Graph:
 
     def has_edge(self, v1, v2):
         if not self.is_in_range(v1,v2):
-            return -1
+            return False
         else:
             return self.arr[v1][v2]!=0
 
@@ -83,7 +83,6 @@ class Graph:
                 self.edges-=1
                 self.arr[i][index]=0
                 if (self.arr[index][i] != 0):
-                    self.edges -= 1
                     self.arr[index][i]=0
 
     def print_graph(self):
