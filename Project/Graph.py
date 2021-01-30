@@ -84,8 +84,7 @@ class Graph:
             if(self.arr[i][index]!=0):
                 self.edges-=1
                 self.arr[i][index]=0
-                if (self.arr[index][i]!= 0):
-                    self.arr[index][i]=0
+                self.arr[index][i]=0
 
     def print_graph(self):
         print("Graph structure")
@@ -126,33 +125,33 @@ class Graph:
                         if(newDistance<self.distance[v]):
                             self.distance[v]=newDistance
                             self.travel[v]=u
-        print(("Vertex     Distance from source"))
-        for i in range (0,self.size):
-            print('{0:4d} {1:16.0f}'.format(i,self.distance[i]))
+      #  print(("Vertex     Distance from source"))
+      #  for i in range (0,self.size):
+      #      print('{0:4d} {1:16.0f}'.format(i,self.distance[i]))
 
-        print("Paths taken to get to each vertex")
-        for i in range(0,self.size):
-            if(self.travel[i]!=None):
-                path = []
-                curr=self.travel[i]
-                while(curr!=None and curr!=self.source):
-                    path.append(curr)
-                    if(self.travel[curr]==None):
-                        curr=self.source
-                    else:
-                        curr=self.travel[curr]
-                if(len(path)!=0):
-                    print(self.source,end =" ")
-                    for j in range(len(path)):
-                        print(" - ", path[j],end=" ")
-                    print(" - ",i)
-                else:
-                    print(self.source," - ", i)
-            else:
-                if (i == self.source):
-                    print(self.source)
-                else:
-                    print("Could not get to vertex ", i)
+      #  print("Paths taken to get to each vertex")
+      #  for i in range(0,self.size):
+      #      if(self.travel[i]!=None):
+      #          path = []
+      #          curr=self.travel[i]
+      #          while(curr!=None and curr!=self.source):
+      #             path.append(curr)
+      #              if(self.travel[curr]==None):
+      #                 curr=self.source
+      #             else:
+      #                  curr=self.travel[curr]
+      #           if(len(path)!=0):
+      #              print(self.source,end =" ")
+      #              for j in range(len(path)):
+      #                  print(" - ", path[j],end=" ")
+      #              print(" - ",i)
+      #          else:
+      #              print(self.source," - ", i)
+      #      else:
+      #          if (i == self.source):
+      #              print(self.source)
+      #          else:
+      #              print("Could not get to vertex ", i)
 
 
 class Test(unittest.TestCase):
@@ -182,6 +181,7 @@ class Test(unittest.TestCase):
             self.assertTrue(self.graph.is_in_range(i,i+1) is True)
         for i in range(4,10):
             self.assertTrue(self.graph.is_in_range(i,i+1) is False)
+
     def test_has_edge(self):
         self.assertTrue(self.graph.has_edge(1, 2), True)
         self.assertTrue(self.graph.has_edge(1, 4), True)
@@ -215,16 +215,31 @@ class Test(unittest.TestCase):
         self.assertTrue(copy.edges == self.graph.edges == 7)
         empty = Graph(0)
         self.assertTrue(empty.remove_edge(0,2), -1)
+
     def test_add_edge(self):
         copy = self.graph.copy_graph()
-        self.assertTrue(self.graph==copy)
-        self.graph.add_edge(0, 4, 10)
+        self.graph.add_edge(0,4,10)
         self.assertFalse(self.graph==copy)
         copy.arr[0][4] = 10
         copy.arr[4][0] = 10
         copy.edges += 1
         self.assertTrue(self.graph == copy)
 
+    def test_remove_vertex(self):
+        copy = self.graph.copy_graph()
+        self.graph.remove_vertex(0)
+        self.assertFalse(self.graph==copy)
+        for i in range(copy.size):
+            if (copy.arr[i][0] != 0):
+                copy.edges -= 1
+                copy.arr[i][0] = 0
+                copy.arr[0][i] = 0
+        self.assertTrue(self.graph==copy)
+    def test_dijkstra(self):
+        self.graph.dijkstra(2)
+        self.assertTrue(self.graph.source,2)
+        self.assertTrue(self.graph.distance,[1,3,0,4,3])
+        self.assertTrue(self.graph.travel,[2,2,None,0,2])
     def tearDown(self): pass
 
 if __name__ == '__main__':
